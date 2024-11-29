@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: false
+
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: students
+            uri: lb://msvc-student
+            predicates:
+              - Path=/api/student/**
+          - id: courses
+            uri: http://localhost:9090
+            predicates:
+              - Path=/api/course/**
+        discovery:
+          locator:
+            enabled: true
+            lower-case-service-id: true
+
